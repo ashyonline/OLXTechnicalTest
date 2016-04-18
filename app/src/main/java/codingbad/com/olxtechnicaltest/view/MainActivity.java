@@ -164,7 +164,9 @@ public class MainActivity extends AbstractAppCompatActivity implements
 
         if (TESTING) {
             loadingView.dismiss();
-            mainFragment.setModel(dataManager.getMainCategory());
+            if (mainFragment != null) {
+                mainFragment.setModel(dataManager.getMainCategory());
+            }
         }
         c.close();
     }
