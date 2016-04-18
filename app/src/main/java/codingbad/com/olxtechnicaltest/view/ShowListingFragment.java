@@ -21,7 +21,6 @@ import codingbad.com.olxtechnicaltest.R;
  * Show list of element for the given Category.
  *
  * The user may choose between list or grid view.
- *
  */
 public class ShowListingFragment extends AbstractFragment<ShowListingFragment.Callbacks>
         implements ListingItemAdapter.RecyclerViewListener {

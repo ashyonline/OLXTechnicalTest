@@ -1,16 +1,11 @@
 package codingbad.com.olxtechnicaltest.view;
 
-import com.squareup.picasso.Picasso;
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.List;
-
-import codingbad.com.olxtechnicaltest.R;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
@@ -32,9 +27,7 @@ public class ListingItemAdapter extends RecyclerView.Adapter<ListingItemAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ImageView image = new ImageView(parent.getContext());
-        image.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
+        ListingView image = new ListingView(parent.getContext());
 
         return new ViewHolder(image);
     }
@@ -43,23 +36,7 @@ public class ListingItemAdapter extends RecyclerView.Adapter<ListingItemAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         String url = images.get(position);
 
-        // now sure this should be here
-        int height;
-        int width;
-        if (isShowingList) {
-            height = (int) context.getResources().getDimension(R.dimen.item_size);
-            width = height * 4;
-        } else {
-            height = (int) context.getResources().getDimension(R.dimen.item_size_grid);
-            width = height;
-        }
-
-        Picasso.with(context)
-                .load(url)
-                .centerCrop()
-                .resize(width, height)
-                .placeholder(R.drawable.placeholder)
-                .into(holder.view);
+        holder.view.setModel(url, isShowingList);
     }
 
     @Override
@@ -84,9 +61,9 @@ public class ListingItemAdapter extends RecyclerView.Adapter<ListingItemAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final ImageView view;
+        private final ListingView view;
 
-        public ViewHolder(ImageView itemView) {
+        public ViewHolder(ListingView itemView) {
             super(itemView);
             this.view = itemView;
             this.view.setOnClickListener(this);

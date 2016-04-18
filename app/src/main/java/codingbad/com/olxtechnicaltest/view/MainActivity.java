@@ -51,6 +51,8 @@ public class MainActivity extends AbstractAppCompatActivity implements
     // if true, DummyData will be used instead of the Custom Search Service
     private static final boolean TESTING = true;
 
+    private static final String SELECTED_CATEGORY = "selected_category";
+
     @Inject
     protected SessionManager sessionManager;
 
@@ -83,11 +85,14 @@ public class MainActivity extends AbstractAppCompatActivity implements
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         compositeSubscription = new CompositeSubscription();
+
+        if (savedInstanceState != null) {
+            selectedCategory = savedInstanceState.getParcelable(SELECTED_CATEGORY);
+        }
 
         // not sure this should be here
         if (sessionManager.isFirstTime()) {
@@ -280,6 +285,14 @@ public class MainActivity extends AbstractAppCompatActivity implements
                 values,
                 selection,
                 selectionArgs);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (selectedCategory != null) {
+            outState.putParcelable(SELECTED_CATEGORY, selectedCategory);
+        }
     }
 
     @Override
