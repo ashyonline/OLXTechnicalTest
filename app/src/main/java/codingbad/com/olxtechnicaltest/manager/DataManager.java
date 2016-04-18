@@ -46,6 +46,7 @@ public class DataManager {
         int minClicks = 1;
 
         int current;
+        this.mainCategory = categories.get(0);
 
         for (Category category : categories) {
             current = category.clicks();

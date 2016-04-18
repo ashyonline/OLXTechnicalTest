@@ -41,7 +41,9 @@ import rx.subscriptions.CompositeSubscription;
  *
  * It has an instance to the SearchService and does the main search.
  */
-public class MainActivity extends AbstractAppCompatActivity implements MainFragment.Callbacks {
+public class MainActivity extends AbstractAppCompatActivity implements
+        MainFragment.Callbacks,
+        ShowCategoriesFragment.Callbacks {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -71,8 +73,13 @@ public class MainActivity extends AbstractAppCompatActivity implements MainFragm
 
     @Override
     protected void setInitialFragment() {
-        setInitialFragment(MainFragment.newInstance());
+        if (sessionManager.isFirstTime()) {
+            setInitialFragment(ShowCategoriesFragment.newInstance());
+        } else {
+            setInitialFragment(MainFragment.newInstance());
+        }
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,5 +228,20 @@ public class MainActivity extends AbstractAppCompatActivity implements MainFragm
         }
 
         return urls;
+    }
+
+    @Override
+    public void showCategories() {
+        replaceFragment(ShowCategoriesFragment.newInstance());
+    }
+
+    @Override
+    public Category getMainCategory() {
+        return dataManager.getMainCategory();
+    }
+
+    @Override
+    public void showListingForMainCategory() {
+        // TODO: show listing!
     }
 }

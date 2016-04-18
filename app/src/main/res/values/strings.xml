@@ -2,4 +2,7 @@
     <string name="app_name">OLX Technical Test</string>
     <string name="dismiss">Dismiss</string>
     <string name="error_quota_exceeded">Daily Custom Search quota exceded, you will see hardcoded images instead</string>
+    <string name="show_more_categories">Show More Categories</string>
+    <string name="go_to_category">Go to listing</string>
+    <string name="main_title">Welcome to the classifieds site!</string>
 </resources>

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="elevation">5dp</dimen>
+    <dimen name="big_image">200dp</dimen>
+    <dimen name="not_that_big_margin">70dp</dimen>
+    <dimen name="title_size">20dp</dimen>
 </resources>
