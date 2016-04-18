@@ -71,6 +71,8 @@ public class MainActivity extends AbstractAppCompatActivity implements
 
     private Scheduler mainThreadScheduler = AndroidSchedulers.mainThread();
 
+    private Category selectedCategory;
+
     @Override
     protected void setInitialFragment() {
         if (sessionManager.isFirstTime()) {
@@ -242,6 +244,42 @@ public class MainActivity extends AbstractAppCompatActivity implements
 
     @Override
     public void showListingForMainCategory() {
-        // TODO: show listing!
+        this.selectedCategory = getMainCategory();
+        showListingFor();
     }
+
+    @Override
+    public void onCategoryClicked(Category category) {
+        category.addClick();
+        // update database
+        saveOneMoreClick(category);
+        dataManager.calculateCategories();
+        this.selectedCategory = category;
+        showListingFor();
+    }
+
+    private void showListingFor() {
+        replaceFragment(ShowListingFragment.newInstance());
+    }
+
+    // update database
+    private void saveOneMoreClick(Category category) {
+        SQLiteDatabase db = categoryEventTrackerHelper.getReadableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(CategoryEvent.COLUMN_NAME_CLICKS,
+                category.clicks());
+
+        String selection = CategoryEvent.COLUMN_NAME_CATEGORY_ID
+                + " LIKE ?";
+        String[] selectionArgs = {String.valueOf(category.getName())};
+
+        int count = db.update(
+                CategoryEvent.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+        Log.d(TAG, "Number of rows updated: " + count);
+    }
+
 }
