@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_margin="@dimen/base_margin">
+    <ToggleButton
+            android:id="@+id/fragment_show_listing_button"
+            android:layout_gravity="end"
+            android:layout_width="@dimen/toggle_size"
+            android:layout_height="@dimen/toggle_size"
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/ic_toggle_background"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    <TextView
+            android:id="@+id/fragment_show_listing_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_show_listing_button"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_size"
+            android:layout_marginBottom="@dimen/base_margin"/>
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_show_listing_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/fragment_show_listing_title">
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>

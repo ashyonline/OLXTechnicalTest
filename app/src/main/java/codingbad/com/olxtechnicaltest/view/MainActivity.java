@@ -43,7 +43,8 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class MainActivity extends AbstractAppCompatActivity implements
         MainFragment.Callbacks,
-        ShowCategoriesFragment.Callbacks {
+        ShowCategoriesFragment.Callbacks,
+        ShowListingFragment.Callbacks {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -279,7 +280,15 @@ public class MainActivity extends AbstractAppCompatActivity implements
                 values,
                 selection,
                 selectionArgs);
-        Log.d(TAG, "Number of rows updated: " + count);
     }
 
+    @Override
+    public List<String> getImages() {
+        return this.selectedCategory.getUrls();
+    }
+
+    @Override
+    public String getCategoryName() {
+        return selectedCategory.getName();
+    }
 }

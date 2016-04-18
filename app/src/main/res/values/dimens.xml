@@ -8,4 +8,8 @@
     <dimen name="simple_margin">5dp</dimen>
     <dimen name="big_letter">50dp</dimen>
     <dimen name="category_height">100dp</dimen>
+    <dimen name="base_margin">15dp</dimen>
+    <dimen name="toggle_size">50dp</dimen>
+    <dimen name="item_size">90dp</dimen>
+    <dimen name="item_size_grid">160dp</dimen>
 </resources>
