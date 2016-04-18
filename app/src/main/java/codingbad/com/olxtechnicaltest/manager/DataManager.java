@@ -67,13 +67,11 @@ public class DataManager {
             // first category, width 1: min - min+r
             if (minClicks <= current && current <= minClicks + r) {
                 category.setRatio(1);
-            }
-            // second category, width 2: min+r - min+r*2
-            if (minClicks + r < current && current < minClicks + (r * 2)) {
+            } else if (minClicks + r < current && current < minClicks + (r * 2)) {
+                // second category, width 2: min+r - min+r*2
                 category.setRatio(2);
-            }
-            // third category, width 3: min+r*2 - min+r*3
-            if (minClicks + (r * 2) <= current && current <= minClicks + (r * 3)) {
+            } else if (minClicks + (r * 2) <= current && current <= minClicks + (r * 3)) {
+                // third category, width 3: min+r*2 - min+r*3
                 category.setRatio(3);
             }
         }
