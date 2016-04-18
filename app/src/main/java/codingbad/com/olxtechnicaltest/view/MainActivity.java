@@ -2,36 +2,14 @@ package codingbad.com.olxtechnicaltest.view;
 
 import com.google.inject.Inject;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import codingbad.com.olxtechnicaltest.OlxTechnicalTestApplication;
 import codingbad.com.olxtechnicaltest.R;
-import codingbad.com.olxtechnicaltest.database.CategoryEventTrackerContract.CategoryEvent;
-import codingbad.com.olxtechnicaltest.database.CategoryEventTrackerHelper;
-import codingbad.com.olxtechnicaltest.database.DummyData;
-import codingbad.com.olxtechnicaltest.dto.ImageSearchResult;
-import codingbad.com.olxtechnicaltest.dto.ResponseDto;
-import codingbad.com.olxtechnicaltest.manager.DataManager;
-import codingbad.com.olxtechnicaltest.manager.SessionManager;
-import codingbad.com.olxtechnicaltest.model.Categories;
 import codingbad.com.olxtechnicaltest.model.Category;
-import codingbad.com.olxtechnicaltest.service.SearchService;
+import codingbad.com.olxtechnicaltest.mvp.MainContract;
 import codingbad.com.olxtechnicaltest.utils.UIUtils;
-import retrofit2.HttpException;
-import rx.Observer;
-import rx.Scheduler;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
@@ -44,47 +22,23 @@ import rx.subscriptions.CompositeSubscription;
 public class MainActivity extends AbstractAppCompatActivity implements
         MainFragment.Callbacks,
         ShowCategoriesFragment.Callbacks,
-        ShowListingFragment.Callbacks, LoadingView.Callback {
-
-    private static final String TAG = MainActivity.class.getSimpleName();
-
-    // if true, DummyData will be used instead of the Custom Search Service
-    private static final boolean TESTING = true;
+        ShowListingFragment.Callbacks, LoadingView.Callback,
+        MainContract.View {
 
     private static final String SELECTED_CATEGORY = "selected_category";
 
-    @Inject
-    protected SessionManager sessionManager;
-
-    @Inject
-    protected DataManager dataManager;
-
-    @Inject
-    protected Categories categories;
-
-    @Inject
-    protected CategoryEventTrackerHelper categoryEventTrackerHelper;
-
     protected LoadingView loadingView;
 
-    private CompositeSubscription compositeSubscription;
-
     @Inject
-    private SearchService searchService;
-
-    private Scheduler ioScheduler = Schedulers.io();
-
-    private Scheduler mainThreadScheduler = AndroidSchedulers.mainThread();
+    protected MainContract.Presenter presenter;
 
     private Category selectedCategory;
-
-    private boolean serverError = false;
 
     private MainFragment mainFragment;
 
     @Override
     protected void setInitialFragment() {
-        if (sessionManager.isFirstTime()) {
+        if (presenter.isFirstTime()) {
             setInitialFragment(ShowCategoriesFragment.newInstance());
         } else {
             mainFragment = (MainFragment) MainFragment.newInstance();
@@ -95,170 +49,22 @@ public class MainActivity extends AbstractAppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        compositeSubscription = new CompositeSubscription();
+        presenter.attachMVPView(this);
+
         loadingView = new LoadingView(this);
 
         if (savedInstanceState != null) {
             selectedCategory = savedInstanceState.getParcelable(SELECTED_CATEGORY);
         }
 
-        // not sure this should be here
-        if (sessionManager.isFirstTime()) {
-            initializeDatabase();
-            sessionManager.setFirstTime(false);
-        }
-
-        // not even this
-        if (dataManager.isEmpty()) {
-            readFromDatabase();
-        }
+        presenter.onCreate();
     }
 
-    private void readFromDatabase() {
-        // show loading view
-        loadingView.attach(mainLayout, true, this);
-
-        SQLiteDatabase db = categoryEventTrackerHelper.getReadableDatabase();
-
-        String[] projection = {
-                CategoryEvent.COLUMN_NAME_CATEGORY_ID,
-                CategoryEvent.COLUMN_NAME_INITIAL,
-                CategoryEvent.COLUMN_NAME_SEARCH_CRITERIA,
-                CategoryEvent.COLUMN_NAME_CLICKS
-        };
-        Cursor c = db.query(
-                CategoryEvent.TABLE_NAME, projection, null, null, null,
-                null, null
-        );
-
-        int columnIndexName = c.getColumnIndexOrThrow(
-                CategoryEvent.COLUMN_NAME_CATEGORY_ID);
-        int columnIndexInitials = c.getColumnIndexOrThrow(
-                CategoryEvent.COLUMN_NAME_INITIAL);
-        int columnIndexSearchCriteria = c.getColumnIndexOrThrow(
-                CategoryEvent.COLUMN_NAME_SEARCH_CRITERIA);
-        int columnIndexClicks = c.getColumnIndexOrThrow(
-                CategoryEvent.COLUMN_NAME_CLICKS);
-
-        String categoryName;
-        String initials;
-        String searchCriteria;
-        int clicks;
-
-        while (c.moveToNext()) {
-            // look for the url of the image tha will represent the category
-            // and then create the category
-            categoryName = c.getString(columnIndexName);
-            initials = c.getString(columnIndexInitials);
-            searchCriteria = c.getString(columnIndexSearchCriteria);
-            clicks = c.getInt(columnIndexClicks);
-
-            if (TESTING) {
-                String url = DummyData.getUrlFor(categoryName);
-                List<String> urls = DummyData.getUrlsFor(categoryName);
-                dataManager.addCategory(new Category(categoryName, url, initials, clicks, urls));
-            } else {
-                getOneImageUrl(searchCriteria, categoryName, initials, clicks);
-            }
-        }
-
-        if (TESTING) {
-            loadingView.dismiss();
-            if (mainFragment != null) {
-                mainFragment.setModel(dataManager.getMainCategory());
-            }
-        }
-        c.close();
-    }
-
-    private void initializeDatabase() {
-        SQLiteDatabase db = categoryEventTrackerHelper.getWritableDatabase();
-        ContentValues values;
-        for (Categories.InitialCategory initialCategory : categories.getInitialCategories()) {
-            values = new ContentValues();
-            values.put(CategoryEvent.COLUMN_NAME_CATEGORY_ID,
-                    initialCategory.getName());
-            values.put(CategoryEvent.COLUMN_NAME_CLICKS, 1);
-            values.put(CategoryEvent.COLUMN_NAME_INITIAL,
-                    initialCategory.getInitials());
-            values.put(CategoryEvent.COLUMN_NAME_SEARCH_CRITERIA,
-                    initialCategory.getSearchCriteria());
-            db.insert(CategoryEvent.TABLE_NAME, null, values);
-        }
-    }
-
-    private void getOneImageUrl(final String searchCriteria, final String categoryName,
-            final String initials, final int clicks) {
-        Subscription subscription = searchService
-                .search(searchCriteria)
-                .subscribeOn(ioScheduler)
-                .observeOn(mainThreadScheduler)
-                .subscribe(new Observer<ResponseDto>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.i(TAG, "Search Completed");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.i(TAG, "Search Error");
-                        serverError = true;
-                        loadingView.showErrorView();
-                        if (e instanceof HttpException) {
-                            if (((HttpException) e).code() == 403) {
-                                // just in case I used my quota but want to test the rest of the app
-                                String url = DummyData.getUrlFor(categoryName);
-                                List<String> urls = DummyData.getUrlsFor(categoryName);
-                                dataManager.addCategory(
-                                        new Category(categoryName, url, initials, clicks, urls));
-                                // show snackbar but continue
-                                UIUtils.showDismissibleSnackBar(MainActivity.this.mainLayout,
-                                        R.string.error_quota_exceeded);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onNext(ResponseDto responseDto) {
-                        Log.i(TAG, "Search Next");
-                        List<String> urls = getUrls(responseDto.getResult());
-
-                        // get one random image from the first RANDOMIZE_SIZE
-                        int index = new Random()
-                                .nextInt(OlxTechnicalTestApplication.RANDOMIZE_SIZE);
-                        String url = responseDto.getResult().get(index).getImageUrl();
-
-                        dataManager.addCategory(
-                                new Category(categoryName, url, initials, clicks, urls));
-
-                        if (dataManager.isReady()) {
-                            loadingView.dismiss();
-
-                            if (mainFragment != null) {
-                                mainFragment.setModel(dataManager.getMainCategory());
-                            }
-                        }
-                    }
-                });
-
-        this.compositeSubscription.add(subscription);
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (compositeSubscription != null) {
-            compositeSubscription.clear();
-        }
-    }
-
-    private List<String> getUrls(List<ImageSearchResult> result) {
-        List<String> urls = new ArrayList<>();
-        for (ImageSearchResult imageSearchResult : result) {
-            urls.add(imageSearchResult.getImageUrl());
-        }
-
-        return urls;
+        presenter.detachMVPView();
     }
 
     @Override
@@ -268,7 +74,7 @@ public class MainActivity extends AbstractAppCompatActivity implements
 
     @Override
     public Category getMainCategory() {
-        return dataManager.getMainCategory();
+        return presenter.getMainCategory();
     }
 
     @Override
@@ -281,33 +87,14 @@ public class MainActivity extends AbstractAppCompatActivity implements
     public void onCategoryClicked(Category category) {
         category.addClick();
         // update database
-        saveOneMoreClick(category);
-        dataManager.calculateCategories();
+        presenter.saveOneMoreClick(category);
+        presenter.calculateCategories();
         this.selectedCategory = category;
         showListingFor();
     }
 
     private void showListingFor() {
         replaceFragment(ShowListingFragment.newInstance());
-    }
-
-    // update database
-    private void saveOneMoreClick(Category category) {
-        SQLiteDatabase db = categoryEventTrackerHelper.getReadableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(CategoryEvent.COLUMN_NAME_CLICKS,
-                category.clicks());
-
-        String selection = CategoryEvent.COLUMN_NAME_CATEGORY_ID
-                + " LIKE ?";
-        String[] selectionArgs = {String.valueOf(category.getName())};
-
-        int count = db.update(
-                CategoryEvent.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs);
     }
 
     @Override
@@ -331,5 +118,40 @@ public class MainActivity extends AbstractAppCompatActivity implements
     @Override
     public void onRetryClick() {
 
+    }
+
+    @Override
+    public void onServerError() {
+        loadingView.showErrorView();
+    }
+
+    @Override
+    public void exceededQuota() {
+        // show snackbar but continue
+        UIUtils.showDismissibleSnackBar(mainLayout,
+                R.string.error_quota_exceeded);
+    }
+
+    @Override
+    public void dataIsReady(Category category) {
+        loadingView.dismiss();
+
+        if (mainFragment != null) {
+            mainFragment.setModel(category);
+        }
+    }
+
+    @Override
+    public void readingFromDatabaseStarted() {
+        // show loading view
+        loadingView.attach(mainLayout, true, this);
+    }
+
+    @Override
+    public void readingFromDatabaseFinished(Category category) {
+        loadingView.dismiss();
+        if (mainFragment != null) {
+            mainFragment.setModel(category);
+        }
     }
 }

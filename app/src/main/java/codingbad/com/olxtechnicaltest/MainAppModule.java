@@ -5,6 +5,9 @@ import com.google.inject.Provider;
 
 import android.content.Context;
 
+import codingbad.com.olxtechnicaltest.mvp.MainContract;
+import codingbad.com.olxtechnicaltest.mvp.MainPresenter;
+
 /**
  * Created by Ayelen Chavez on 4/18/16.
  *
@@ -28,5 +31,6 @@ public class MainAppModule extends AbstractModule {
                                 .getAppContext();
                     }
                 });
+        bind(MainContract.Presenter.class).to(MainPresenter.class);
     }
 }
