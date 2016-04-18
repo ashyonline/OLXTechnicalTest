@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">OLX Technical Test</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="error_quota_exceeded">Daily Custom Search quota exceded, you will see hardcoded images instead</string>
 </resources>

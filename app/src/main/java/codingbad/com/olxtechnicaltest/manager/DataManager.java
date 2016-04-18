@@ -19,7 +19,9 @@ public class DataManager {
     // bad name. This is the number of different width a category can have and make no sense
     // having in a constant since the rest of the algorithm is hardcoded
     private static final int NUMBER_OF_RATIOS = 3;
+
     private List<Category> categories = new ArrayList<>();
+
     private Category mainCategory;
 
     public void addCategory(Category category) {

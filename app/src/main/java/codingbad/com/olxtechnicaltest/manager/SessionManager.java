@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 /**
  * Created by Ayelen Chavez on 4/18/16.
  * Control Session Data.
- *
  */
 @Singleton
 public class SessionManager {

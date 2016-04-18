@@ -11,9 +11,9 @@ import java.util.List;
  *
  * Represents a category.
  * Also, it implements AsymmetricItem to be used in an AsymmentricGridView
- *
  */
 public class Category implements AsymmetricItem {
+
     public static final Creator<Category> CREATOR = new Creator<Category>() {
         @Override
         public Category createFromParcel(Parcel source) {

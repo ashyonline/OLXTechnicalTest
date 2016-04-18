@@ -65,7 +65,8 @@ public class SearchService {
     }
 
     public Observable<ResponseDto> search(String word) {
-        return searchService.search(word, Secret.CX, Secret.CUSTOM_SEARCH_CREDENTIAL, SEARCH_TYPE, IMAGE_SIZE,
-                OlxTechnicalTestApplication.RESULT_SIZE);
+        return searchService
+                .search(word, Secret.CX, Secret.CUSTOM_SEARCH_CREDENTIAL, SEARCH_TYPE, IMAGE_SIZE,
+                        OlxTechnicalTestApplication.RESULT_SIZE);
     }
 }

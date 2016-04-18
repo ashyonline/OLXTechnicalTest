@@ -13,6 +13,7 @@ import android.content.Context;
 public class OlxTechnicalTestApplication extends Application {
 
     public static final int RESULT_SIZE = 30;
+
     public static final int RANDOMIZE_SIZE = 10;
 
     private static final Injector INJECTOR = Guice.createInjector(new MainAppModule());

@@ -16,7 +16,6 @@ import codingbad.com.olxtechnicaltest.OlxTechnicalTestApplication;
  *
  * Base Abstract fragment which has reference to it's callbacks (typically implemented by its
  * activity (but could be any object).
- *
  */
 public abstract class AbstractFragment<T> extends Fragment {
 

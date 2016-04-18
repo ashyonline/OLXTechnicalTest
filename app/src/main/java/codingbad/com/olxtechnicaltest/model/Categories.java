@@ -12,13 +12,13 @@ import java.util.List;
  * The user will see 6 Categories. Each of them has a search criteria which will be used to search
  * for the given images. The name of the category will be the once showed to the user and the
  * initials are showed on the categories images.
- *
  */
 @Singleton
 public final class Categories {
 
     // don't like this here but...
     public static int INITIAL_CATEGORIES_COUNT = 6;
+
     protected final List<InitialCategory> initialCategories;
 
     public Categories() {

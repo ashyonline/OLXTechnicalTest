@@ -1,7 +1,6 @@
 package codingbad.com.olxtechnicaltest;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Module;
 import com.google.inject.Provider;
 
 import android.content.Context;
@@ -21,11 +20,13 @@ public class MainAppModule extends AbstractModule {
                 return OlxTechnicalTestApplication.getContext();
             }
         });
-        bind(OlxTechnicalTestApplication.class).toProvider(new Provider<OlxTechnicalTestApplication>() {
-            @Override
-            public OlxTechnicalTestApplication get() {
-                return (OlxTechnicalTestApplication) OlxTechnicalTestApplication.getAppContext();
-            }
-        });
+        bind(OlxTechnicalTestApplication.class)
+                .toProvider(new Provider<OlxTechnicalTestApplication>() {
+                    @Override
+                    public OlxTechnicalTestApplication get() {
+                        return (OlxTechnicalTestApplication) OlxTechnicalTestApplication
+                                .getAppContext();
+                    }
+                });
     }
 }
