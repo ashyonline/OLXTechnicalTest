@@ -44,7 +44,7 @@ import rx.subscriptions.CompositeSubscription;
 public class MainActivity extends AbstractAppCompatActivity implements
         MainFragment.Callbacks,
         ShowCategoriesFragment.Callbacks,
-        ShowListingFragment.Callbacks {
+        ShowListingFragment.Callbacks, LoadingView.Callback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -65,6 +65,8 @@ public class MainActivity extends AbstractAppCompatActivity implements
     @Inject
     protected CategoryEventTrackerHelper categoryEventTrackerHelper;
 
+    protected LoadingView loadingView;
+
     private CompositeSubscription compositeSubscription;
 
     @Inject
@@ -76,12 +78,17 @@ public class MainActivity extends AbstractAppCompatActivity implements
 
     private Category selectedCategory;
 
+    private boolean serverError = false;
+
+    private MainFragment mainFragment;
+
     @Override
     protected void setInitialFragment() {
         if (sessionManager.isFirstTime()) {
             setInitialFragment(ShowCategoriesFragment.newInstance());
         } else {
-            setInitialFragment(MainFragment.newInstance());
+            mainFragment = (MainFragment) MainFragment.newInstance();
+            setInitialFragment(mainFragment);
         }
     }
 
@@ -89,6 +96,7 @@ public class MainActivity extends AbstractAppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         compositeSubscription = new CompositeSubscription();
+        loadingView = new LoadingView(this);
 
         if (savedInstanceState != null) {
             selectedCategory = savedInstanceState.getParcelable(SELECTED_CATEGORY);
@@ -107,6 +115,9 @@ public class MainActivity extends AbstractAppCompatActivity implements
     }
 
     private void readFromDatabase() {
+        // show loading view
+        loadingView.attach(mainLayout, true, this);
+
         SQLiteDatabase db = categoryEventTrackerHelper.getReadableDatabase();
 
         String[] projection = {
@@ -152,7 +163,8 @@ public class MainActivity extends AbstractAppCompatActivity implements
         }
 
         if (TESTING) {
-            dataManager.calculateCategories();
+            loadingView.dismiss();
+            mainFragment.setModel(dataManager.getMainCategory());
         }
         c.close();
     }
@@ -175,7 +187,6 @@ public class MainActivity extends AbstractAppCompatActivity implements
 
     private void getOneImageUrl(final String searchCriteria, final String categoryName,
             final String initials, final int clicks) {
-
         Subscription subscription = searchService
                 .search(searchCriteria)
                 .subscribeOn(ioScheduler)
@@ -189,6 +200,8 @@ public class MainActivity extends AbstractAppCompatActivity implements
                     @Override
                     public void onError(Throwable e) {
                         Log.i(TAG, "Search Error");
+                        serverError = true;
+                        loadingView.showErrorView();
                         if (e instanceof HttpException) {
                             if (((HttpException) e).code() == 403) {
                                 // just in case I used my quota but want to test the rest of the app
@@ -215,6 +228,14 @@ public class MainActivity extends AbstractAppCompatActivity implements
 
                         dataManager.addCategory(
                                 new Category(categoryName, url, initials, clicks, urls));
+
+                        if (dataManager.isReady()) {
+                            loadingView.dismiss();
+
+                            if (mainFragment != null) {
+                                mainFragment.setModel(dataManager.getMainCategory());
+                            }
+                        }
                     }
                 });
 
@@ -303,5 +324,10 @@ public class MainActivity extends AbstractAppCompatActivity implements
     @Override
     public String getCategoryName() {
         return selectedCategory.getName();
+    }
+
+    @Override
+    public void onRetryClick() {
+
     }
 }

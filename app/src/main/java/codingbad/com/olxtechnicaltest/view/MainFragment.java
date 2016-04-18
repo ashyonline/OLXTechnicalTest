@@ -23,8 +23,12 @@ public class MainFragment extends AbstractFragment<MainFragment.Callbacks> {
 
     private static final String TAG = MainFragment.class.getSimpleName();
 
+    private static final String CATEGORY = "category";
+
     @Bind(R.id.activity_main_image)
     protected ImageView mainCategory;
+
+    private Category category;
 
     public static Fragment newInstance() {
         return new MainFragment();
@@ -33,16 +37,43 @@ public class MainFragment extends AbstractFragment<MainFragment.Callbacks> {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Category category = callbacks.getMainCategory();
 
-        int size = (int) getResources().getDimension(R.dimen.big_image);
+        if (savedInstanceState != null) {
+            category = savedInstanceState.getParcelable(CATEGORY);
+        }
 
-        Picasso.with(getContext())
-                .load(category.getImageUrl())
-                .centerCrop()
-                .resize(size, size)
-                .placeholder(R.drawable.placeholder)
-                .into(mainCategory);
+        if (category != null) {
+            initializeView(category);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (category != null) {
+            outState.putParcelable(CATEGORY, category);
+        }
+    }
+
+    /**
+     * Case when the view may have been created but the main category wasn't ready
+     */
+    public void setModel(Category category) {
+        this.category = category;
+        initializeView(category);
+    }
+
+    private void initializeView(Category category) {
+        if (isAdded()) {
+            int size = (int) getResources().getDimension(R.dimen.big_image);
+
+            Picasso.with(getContext())
+                    .load(category.getImageUrl())
+                    .centerCrop()
+                    .resize(size, size)
+                    .placeholder(R.drawable.placeholder)
+                    .into(mainCategory);
+        }
     }
 
     @Override

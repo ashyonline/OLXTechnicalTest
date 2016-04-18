@@ -12,7 +12,7 @@ import android.content.Context;
  */
 public class OlxTechnicalTestApplication extends Application {
 
-    public static final int RESULT_SIZE = 30;
+    public static final int RESULT_SIZE = 10;
 
     public static final int RANDOMIZE_SIZE = 10;
 

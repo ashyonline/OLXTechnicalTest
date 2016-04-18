@@ -4,6 +4,7 @@ import com.google.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import codingbad.com.olxtechnicaltest.model.Categories;
 import codingbad.com.olxtechnicaltest.model.Category;
@@ -27,7 +28,7 @@ public class DataManager {
     public void addCategory(Category category) {
         this.categories.add(category);
 
-        if (this.categories.size() == Categories.INITIAL_CATEGORIES_COUNT) {
+        if (isReady()) {
             calculateCategories();
         }
     }
@@ -46,7 +47,9 @@ public class DataManager {
         int minClicks = 1;
 
         int current;
-        this.mainCategory = categories.get(0);
+
+        // just in case every category has the same clicks, take one
+        this.mainCategory = categories.get(new Random().nextInt(categories.size()));
 
         for (Category category : categories) {
             current = category.clicks();
@@ -79,5 +82,9 @@ public class DataManager {
 
     public Category getMainCategory() {
         return mainCategory;
+    }
+
+    public boolean isReady() {
+        return this.categories.size() == Categories.INITIAL_CATEGORIES_COUNT;
     }
 }

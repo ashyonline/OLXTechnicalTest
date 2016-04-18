@@ -58,7 +58,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.primary_dark));
         }
     }
 

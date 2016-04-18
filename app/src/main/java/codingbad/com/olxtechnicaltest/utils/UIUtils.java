@@ -16,7 +16,7 @@ public class UIUtils {
     public static void showDismissibleSnackBar(View parentView, String text) {
         final Snackbar snackBar = Snackbar.make(parentView, text, Snackbar.LENGTH_LONG);
         snackBar.setActionTextColor(
-                ContextCompat.getColor(parentView.getContext(), R.color.colorPrimaryLight));
+                ContextCompat.getColor(parentView.getContext(), R.color.primary_light));
         snackBar.setAction(R.string.dismiss, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

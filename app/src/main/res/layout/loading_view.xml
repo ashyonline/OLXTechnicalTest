@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <ProgressBar
+            android:id="@+id/loading_view_progress_bar"
+            style="?android:indeterminateProgressStyle"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center" />
+
+    <LinearLayout
+            android:id="@+id/loading_view_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Connection Error"
+                android:textSize="20sp" />
+
+        <Button
+                android:id="@+id/loading_view_retry_button"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Retry" />
+    </LinearLayout>
+
+</FrameLayout>

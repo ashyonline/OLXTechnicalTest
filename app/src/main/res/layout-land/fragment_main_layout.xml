@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_margin="@dimen/not_that_big_margin"
+                tools:context=".view.MainActivity">
+
+    <TextView
+            android:id="@+id/activity_main_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/main_title"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_size"
+            android:gravity="center"/>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_below="@+id/activity_main_title"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+        <FrameLayout
+                android:id="@+id/activity_main_category_layout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:id="@+id/activity_main_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/placeholder"
+                    android:layout_gravity="center"
+                    android:alpha="0.6"
+                    android:layout_centerHorizontal="true"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/go_to_category"
+                    android:layout_gravity="center"/>
+        </FrameLayout>
+        <Button
+                android:id="@+id/activity_main_show_more_categories"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/show_more_categories"
+                android:layout_below="@+id/activity_main_category_layout"/>
+    </LinearLayout>
+</RelativeLayout>
