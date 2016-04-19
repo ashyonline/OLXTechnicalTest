@@ -79,6 +79,9 @@ public class MainPresenter implements MainContract.Presenter {
                                 mainModel.addCategory(
                                         new Category(categoryName, url, initials, clicks, urls));
                                 mainView.exceededQuota();
+                                if (mainModel.isReady()) {
+                                    mainView.dataIsReady(mainModel.getMainCategory());
+                                }
                             }
                         }
                     }
@@ -98,7 +101,6 @@ public class MainPresenter implements MainContract.Presenter {
 
                         if (mainModel.isReady()) {
                             mainView.dataIsReady(mainModel.getMainCategory());
-
                         }
                     }
                 });
