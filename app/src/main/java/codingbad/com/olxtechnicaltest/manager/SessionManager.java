@@ -1,10 +1,10 @@
 package codingbad.com.olxtechnicaltest.manager;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.

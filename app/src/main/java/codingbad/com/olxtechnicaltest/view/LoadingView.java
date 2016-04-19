@@ -1,7 +1,5 @@
 package codingbad.com.olxtechnicaltest.view;
 
-import com.google.inject.Inject;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.design.widget.CoordinatorLayout;
@@ -15,13 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.google.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import codingbad.com.olxtechnicaltest.R;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * View that shows progress to the user and manages errors
  */
 public class LoadingView extends FrameLayout implements View.OnClickListener {

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * This class saves some "business" decisions.
  * The user will see 6 Categories. Each of them has a search criteria which will be used to search
  * for the given images. The name of the category will be the once showed to the user and the

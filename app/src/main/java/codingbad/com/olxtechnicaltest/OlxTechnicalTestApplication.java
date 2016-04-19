@@ -1,10 +1,10 @@
 package codingbad.com.olxtechnicaltest;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
 import android.app.Application;
 import android.content.Context;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.

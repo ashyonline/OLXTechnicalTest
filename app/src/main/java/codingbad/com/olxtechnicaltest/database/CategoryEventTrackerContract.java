@@ -4,7 +4,7 @@ import android.provider.BaseColumns;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * Basic Database contract
  */
 public final class CategoryEventTrackerContract {

@@ -11,7 +11,7 @@ import codingbad.com.olxtechnicaltest.model.Category;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * Adapter for the Categories showed to the user with different sizes depending on the
  * amount of clicks.
  */
@@ -23,7 +23,7 @@ public class CategoryListAdapter extends ArrayAdapter<Category> {
     private ViewHolder viewHolder;
 
     public CategoryListAdapter(Context context, int resource, List<Category> categories,
-            CategoryEventListener listener) {
+                               CategoryEventListener listener) {
         super(context, resource, categories);
 
         this.categoriesListener = listener;

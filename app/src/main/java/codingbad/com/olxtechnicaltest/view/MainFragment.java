@@ -1,12 +1,12 @@
 package codingbad.com.olxtechnicaltest.view;
 
-import com.squareup.picasso.Picasso;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -16,7 +16,7 @@ import codingbad.com.olxtechnicaltest.model.Category;
 /**
  * Created by Ayelen Chavez on 4/18/16.
  * Main fragment shown to the old user.
- *
+ * <p/>
  * It shows the most clicked category and the option to show it's listing or other categories.
  */
 public class MainFragment extends AbstractFragment<MainFragment.Callbacks> {

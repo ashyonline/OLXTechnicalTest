@@ -1,16 +1,16 @@
 package codingbad.com.olxtechnicaltest.database;
 
-import com.google.inject.Inject;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.google.inject.Inject;
 
 import codingbad.com.olxtechnicaltest.database.CategoryEventTrackerContract.CategoryEvent;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * Helper for my simple Data Base management
  */
 public class CategoryEventTrackerHelper extends SQLiteOpenHelper {

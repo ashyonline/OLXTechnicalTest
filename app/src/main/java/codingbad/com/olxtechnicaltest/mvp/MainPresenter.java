@@ -1,8 +1,8 @@
 package codingbad.com.olxtechnicaltest.mvp;
 
-import com.google.inject.Inject;
-
 import android.util.Log;
+
+import com.google.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     public void getOneImageUrl(final String searchCriteria, final String categoryName,
-            final String initials, final int clicks) {
+                               final String initials, final int clicks) {
         Subscription subscription = searchService
                 .search(searchCriteria)
                 .subscribeOn(ioScheduler)

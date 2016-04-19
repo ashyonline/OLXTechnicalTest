@@ -8,7 +8,7 @@ import codingbad.com.olxtechnicaltest.R;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * Some UI helper functions
  */
 public class UIUtils {

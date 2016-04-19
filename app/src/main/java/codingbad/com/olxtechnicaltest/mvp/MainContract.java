@@ -6,7 +6,7 @@ import codingbad.com.olxtechnicaltest.model.Category;
 
 /**
  * Created by Ayelen Chavez on 4/19/16.
- *
+ * <p/>
  * Contract between the main model, view and presenter.
  */
 public interface MainContract {
@@ -31,7 +31,7 @@ public interface MainContract {
         void detachMVPView();
 
         void getOneImageUrl(final String searchCriteria, final String categoryName,
-                final String initials, final int clicks);
+                            final String initials, final int clicks);
 
         void onCreate();
 

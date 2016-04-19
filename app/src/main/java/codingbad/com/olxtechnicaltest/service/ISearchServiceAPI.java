@@ -7,13 +7,13 @@ import rx.Observable;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * Service API to access custom search created for this app
  */
 public interface ISearchServiceAPI {
 
     @GET("/customsearch/v1")
     Observable<ResponseDto> search(@Query("q") String word, @Query("cx") String cx,
-            @Query("key") String customSearchCredential, @Query("searchType") String searchType,
-            @Query("imageSize") String imageSize, @Query("num") int resultSize);
+                                   @Query("key") String customSearchCredential, @Query("searchType") String searchType,
+                                   @Query("imageSize") String imageSize, @Query("num") int resultSize);
 }

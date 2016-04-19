@@ -1,16 +1,16 @@
 package codingbad.com.olxtechnicaltest;
 
+import android.content.Context;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
-
-import android.content.Context;
 
 import codingbad.com.olxtechnicaltest.mvp.MainContract;
 import codingbad.com.olxtechnicaltest.mvp.MainPresenter;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * AppModule for Guice to indicate how objects should be injected
  */
 public class MainAppModule extends AbstractModule {

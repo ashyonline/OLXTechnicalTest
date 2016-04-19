@@ -11,7 +11,7 @@ import codingbad.com.olxtechnicaltest.model.Category;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * Saves data about all the categories in the system.
  */
 @Singleton

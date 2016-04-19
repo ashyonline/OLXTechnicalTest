@@ -1,10 +1,10 @@
 package codingbad.com.olxtechnicaltest.mvp;
 
-import com.google.inject.Inject;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.google.inject.Inject;
 
 import java.util.List;
 

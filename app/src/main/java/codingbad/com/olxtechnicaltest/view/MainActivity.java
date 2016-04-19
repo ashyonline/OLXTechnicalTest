@@ -1,9 +1,8 @@
 package codingbad.com.olxtechnicaltest.view;
 
-import com.google.inject.Inject;
-
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
+import com.google.inject.Inject;
 
 import java.util.List;
 
@@ -14,10 +13,10 @@ import codingbad.com.olxtechnicaltest.utils.UIUtils;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * Main and only Activity.
  * It will show the corresponding fragment and communicate with them.
- *
+ * <p/>
  * It has an instance to the SearchService and does the main search.
  */
 public class MainActivity extends AbstractAppCompatActivity implements

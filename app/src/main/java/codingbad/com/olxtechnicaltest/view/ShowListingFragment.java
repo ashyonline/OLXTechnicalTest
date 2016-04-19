@@ -17,9 +17,9 @@ import codingbad.com.olxtechnicaltest.R;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * Show list of element for the given Category.
- *
+ * <p/>
  * The user may choose between list or grid view.
  */
 public class ShowListingFragment extends AbstractFragment<ShowListingFragment.Callbacks>

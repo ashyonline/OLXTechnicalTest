@@ -1,14 +1,14 @@
 package codingbad.com.olxtechnicaltest.model;
 
-import com.felipecsl.asymmetricgridview.library.model.AsymmetricItem;
-
 import android.os.Parcel;
+
+import com.felipecsl.asymmetricgridview.library.model.AsymmetricItem;
 
 import java.util.List;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * Represents a category.
  * Also, it implements AsymmetricItem to be used in an AsymmentricGridView
  */

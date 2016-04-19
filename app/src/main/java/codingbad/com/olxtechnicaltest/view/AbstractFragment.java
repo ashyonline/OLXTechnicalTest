@@ -13,7 +13,7 @@ import codingbad.com.olxtechnicaltest.OlxTechnicalTestApplication;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * Base Abstract fragment which has reference to it's callbacks (typically implemented by its
  * activity (but could be any object).
  */
@@ -42,7 +42,7 @@ public abstract class AbstractFragment<T> extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(getMainLayoutResId(), container, false);
         ButterKnife.bind(this, view);
 

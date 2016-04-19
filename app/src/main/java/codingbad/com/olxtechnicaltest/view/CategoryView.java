@@ -1,8 +1,5 @@
 package codingbad.com.olxtechnicaltest.view;
 
-import com.felipecsl.asymmetricgridview.library.Utils;
-import com.squareup.picasso.Picasso;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -10,6 +7,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.felipecsl.asymmetricgridview.library.Utils;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

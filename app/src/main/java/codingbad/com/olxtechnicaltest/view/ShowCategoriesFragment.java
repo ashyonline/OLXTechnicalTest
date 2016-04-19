@@ -1,23 +1,19 @@
 package codingbad.com.olxtechnicaltest.view;
 
-import com.google.inject.Inject;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.View;
 
 import com.felipecsl.asymmetricgridview.library.Utils;
 import com.felipecsl.asymmetricgridview.library.widget.AsymmetricGridView;
 import com.felipecsl.asymmetricgridview.library.widget.AsymmetricGridViewAdapter;
-
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import codingbad.com.olxtechnicaltest.R;
-import codingbad.com.olxtechnicaltest.manager.DataManager;
 import codingbad.com.olxtechnicaltest.model.Category;
 
 /**

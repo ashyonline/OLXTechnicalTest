@@ -17,7 +17,7 @@ import rx.Observable;
 
 /**
  * Created by Ayelen Chavez on 4/18/16.
- *
+ * <p/>
  * Implementation of the Custom Search service.
  */
 @Singleton
