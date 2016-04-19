@@ -43,7 +43,7 @@ public class MainFragment extends AbstractFragment<MainFragment.Callbacks> {
         }
 
         if (category != null) {
-            initializeView(category);
+            initializeView();
         }
     }
 
@@ -60,10 +60,10 @@ public class MainFragment extends AbstractFragment<MainFragment.Callbacks> {
      */
     public void setModel(Category category) {
         this.category = category;
-        initializeView(category);
+        initializeView();
     }
 
-    private void initializeView(Category category) {
+    private void initializeView() {
         if (isAdded()) {
             int size = (int) getResources().getDimension(R.dimen.big_image);
 

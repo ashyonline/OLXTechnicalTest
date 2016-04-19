@@ -143,8 +143,14 @@ public class MainPresenter implements MainContract.Presenter {
         mainModel.calculateCategories();
     }
 
+    @Override
+    public List<Category> getCategories() {
+        return mainModel.getCategories();
+    }
+
     private List<String> getUrls(List<ImageSearchResult> result) {
         List<String> urls = new ArrayList<>();
+
         for (ImageSearchResult imageSearchResult : result) {
             urls.add(imageSearchResult.getImageUrl());
         }

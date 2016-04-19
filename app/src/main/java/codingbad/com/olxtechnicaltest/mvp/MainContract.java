@@ -1,5 +1,7 @@
 package codingbad.com.olxtechnicaltest.mvp;
 
+import java.util.List;
+
 import codingbad.com.olxtechnicaltest.model.Category;
 
 /**
@@ -44,6 +46,8 @@ public interface MainContract {
         Category getMainCategory();
 
         void calculateCategories();
+
+        List<Category> getCategories();
     }
 
     interface Model {
@@ -61,5 +65,7 @@ public interface MainContract {
         boolean isFirstTime();
 
         void calculateCategories();
+
+        List<Category> getCategories();
     }
 }

@@ -102,6 +102,11 @@ public class MainModel implements MainContract.Model {
         dataManager.calculateCategories();
     }
 
+    @Override
+    public List<Category> getCategories() {
+        return dataManager.getCategories();
+    }
+
     private void initializeDatabase() {
         SQLiteDatabase db = categoryEventTrackerHelper.getWritableDatabase();
         ContentValues values;

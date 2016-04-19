@@ -3,6 +3,7 @@ package codingbad.com.olxtechnicaltest.view;
 import com.google.inject.Inject;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import java.util.List;
 
@@ -35,11 +36,13 @@ public class MainActivity extends AbstractAppCompatActivity implements
     private Category selectedCategory;
 
     private MainFragment mainFragment;
+    private ShowCategoriesFragment showCategoryFragment;
 
     @Override
     protected void setInitialFragment() {
         if (presenter.isFirstTime()) {
-            setInitialFragment(ShowCategoriesFragment.newInstance());
+            showCategoryFragment = (ShowCategoriesFragment) ShowCategoriesFragment.newInstance();
+            setInitialFragment(showCategoryFragment);
         } else {
             mainFragment = (MainFragment) MainFragment.newInstance();
             setInitialFragment(mainFragment);
@@ -138,6 +141,10 @@ public class MainActivity extends AbstractAppCompatActivity implements
 
         if (mainFragment != null) {
             mainFragment.setModel(category);
+        }
+
+        if (showCategoryFragment != null) {
+            showCategoryFragment.setModel(presenter.getCategories());
         }
     }
 
